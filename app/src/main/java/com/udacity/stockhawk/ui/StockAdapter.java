@@ -2,7 +2,9 @@ package com.udacity.stockhawk.ui;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,16 @@ import android.widget.TextView;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.model.StockModel;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
 
@@ -28,6 +33,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     private final DecimalFormat percentageFormat;
     private Cursor cursor;
     private final StockAdapterOnClickHandler clickHandler;
+    private final String STOCK_DETAILS_KEY = "STOCK_DETAILS";
 
     StockAdapter(Context context, StockAdapterOnClickHandler clickHandler) {
         this.context = context;
@@ -128,11 +134,29 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             cursor.moveToPosition(adapterPosition);
+
+//            Timber.d(String.valueOf(cursor.getColumnCount()));
             int symbolColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
-            clickHandler.onClick(cursor.getString(symbolColumn));
+            int priceColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_PRICE);
+            int historyColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_HISTORY);
+            int absoluteChangeColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_ABSOLUTE_CHANGE);
+            int percentageChangeColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_PERCENTAGE_CHANGE);
+
+
+
+            StockModel stockModel = new StockModel(cursor.getString(symbolColumn),
+                    cursor.getString(priceColumn),
+                    cursor.getString(absoluteChangeColumn),
+                    cursor.getString(percentageChangeColumn),
+                    cursor.getString(historyColumn)
+            );
+            Bundle b = new Bundle();
+            b.putParcelable(STOCK_DETAILS_KEY, stockModel);
+            Intent i = new Intent(context, StockHistoryActivity.class);
+            i.putExtras(b);
+            context.startActivity(i);
 
         }
-
 
     }
 }
