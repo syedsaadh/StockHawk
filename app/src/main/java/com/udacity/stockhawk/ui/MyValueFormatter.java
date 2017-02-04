@@ -15,15 +15,13 @@ import java.util.ArrayList;
 public class MyValueFormatter implements IValueFormatter {
 
     private DecimalFormat mFormat;
-    private ArrayList<StockHistoryModel> stockHistoryModelArrayList;
     public MyValueFormatter() {
-        mFormat = new DecimalFormat("###,###,##0.0"); // use one decimal
-//        this.stockHistoryModelArrayList = stockHistoryModelArrayList;
+        mFormat = new DecimalFormat("###,###,##0.00"); // use one decimal
     }
 
     @Override
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
         // write your logic here
-        return mFormat.format(value) + " $"; // e.g. append a dollar-sign
+        return  "$"+ mFormat.format(value); // e.g. append a dollar-sign
     }
 }
