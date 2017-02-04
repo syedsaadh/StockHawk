@@ -1,6 +1,7 @@
 # Stock Hawk
 
 This is the code for project 3 in Udacity's [Android Developer Nanodegree](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801). 
+This app helps user to find the stock prices and keep track of history of stock prices with intutive graph.
 
 # Screenshots
 ![Alt text](/Screenshots/Screen1.jpeg?raw=true "Screen")
