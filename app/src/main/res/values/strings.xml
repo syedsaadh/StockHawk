@@ -32,5 +32,6 @@
     <string name="toast_stock_added_no_connectivity" translatable="false">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity" translatable="false">Will refresh when network available.</string>
     <string name="add_stock">Add Stock</string>
+    <string name="todays_price">TODAY\'S PRICE</string>
 
 </resources>

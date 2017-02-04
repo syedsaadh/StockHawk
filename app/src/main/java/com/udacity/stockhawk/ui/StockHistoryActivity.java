@@ -107,21 +107,15 @@ public class StockHistoryActivity extends AppCompatActivity implements OnChartVa
         leftAxis.setDrawAxisLine(false);
 
         XAxis xAxis = mChart.getXAxis();
-        //xAxis.setCenterAxisLabels(true);
-        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setGranularity(1f);
         xAxis.setLabelCount(7);
         xAxis.setTextSize(10f);
         xAxis.setTextColor(Color.WHITE);
         xAxis.setDrawGridLines(false);
         int color = ResourcesCompat.getColor(getResources(), R.color.chart_line_color, null); //without theme
         xAxis.setAxisLineColor(color);
-//        int color = ResourcesCompat.getColor(getResources(), R.color.material_blue_500, null); //without theme
-//        xAxis.setGridColor(color);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new MyXAxisValueFormatter(stockHistoryModelArrayList));
-
-//        IMarker marker = new MyMarkerView(this, R.layout.custom_marker_view, stockHistoryModelArrayList);
-//        mChart.setMarker(marker);
 
         setData();
         mChart.animateX(1500);
@@ -134,38 +128,14 @@ public class StockHistoryActivity extends AppCompatActivity implements OnChartVa
         return formatter.format(calendar.getTime());
     }
 
-//    private long getDayMillis(long timeInMillis){
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(timeInMillis);
-//        String dateStr = formatter.format(calendar.getTime());
-//        long dateRtn =0000;
-//        try{
-//            Date date = formatter.parse(dateStr);
-//            Timber.d(String.valueOf(date.getTime()));
-//            dateRtn = date.getTime();
-//            return dateRtn;
-//        }
-//        catch (ParseException e){
-//            Timber.d(e);
-//            return dateRtn;
-//        }
-//        finally {
-//            return dateRtn;
-//        }
-//
-//    }
     public void setData(){
         ArrayList<Entry> entries = new ArrayList<Entry>();
         int i =1;
         for (StockHistoryModel data : stockHistoryModelArrayList) {
             // turn your data into Entry objects
-
             entries.add(new Entry((float) i, data.getCloseValue()));
             i = i+1;
-            Timber.e("Add i = "+i);
-//  Timber.i(data.getCloseValue()+ " == "+ getDateDay(data.getTimeInMillis()));
-        }
+       }
         LineDataSet dataSet = new LineDataSet(entries, "History Data"); // add entries to dataset
         dataSet.setColors(ColorTemplate.getHoloBlue());
         dataSet.setLineWidth(2f);
